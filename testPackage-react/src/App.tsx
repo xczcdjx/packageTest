@@ -1,59 +1,50 @@
-import {useRef, useState} from 'react'
-import './App.css'
+import React, {useState} from 'react';
+import {AppstoreOutlined, MailOutlined, SettingOutlined} from '@ant-design/icons';
+import type {MenuProps} from 'antd';
+import {Menu} from 'antd';
+import {Outlet} from "react-router";
 
-/*import {DynamicCascadeInput,dynamicCascadeInputRef} from "dynamicformdjx-react";
-const App=()=>{
-    const [obj,setObj]=useState<Record<string, any>>({
-        a: {
-            b: {
-                c: {
-                    d: {
-                        e: "hello world"
-                    }
-                }
-            }
-        },
-        aa: [5, 2, 0],
-        aaa: 1314
-    });
-    const dynamicInputRef=useRef<dynamicCascadeInputRef>(null)
-    return (<div>
-        <DynamicCascadeInput ref={dynamicInputRef} isController value={obj} onChange={(e) => setObj(e)}/>
-        <pre>
-            {JSON.stringify(obj,null, 2)}
-        </pre>
-        <div>
-            <button onClick={() => {
-                dynamicInputRef.current?.onSet?.({
-                    test:'hello world'
-                })
-            }}>setData
-            </button>
-        </div>
-    </div>)
-}*/
-import {DynamicInput,dynamicInputRef} from "dynamicformdjx-react";
+type MenuItem = Required<MenuProps>['items'][number];
 
-function App() {
-    const [obj,setObj]=useState<Record<string, any>>({
-        a: 'Hello world',
-        b: 1314,
-        c: [5, 2, 0]
-    });
-    const dynamicInputRef=useRef<dynamicInputRef>(null)
-    return (<div>
-        <DynamicInput ref={dynamicInputRef} isController value={obj} onChange={(e) => setObj(e)}/>
-        <pre>
-            {JSON.stringify(obj,null, 2)}
-        </pre>
-        <div>
-            <button onClick={() => {
-                dynamicInputRef.current?.onSet?.({
-                    test: 'hello World'
-                })
-            }}>setData
-            </button>
-        </div>
-    </div>)
-}
+const items: MenuItem[] = [
+    {
+        label: '输入组件',
+        key: 'input',
+        children: [
+            {
+                label: '单输入',
+                key: 'single'
+            },
+            {
+                label: '级联输入',
+                key: 'cascade'
+            },
+        ],
+    },
+    {
+        label: '表单组件',
+        key: 'form',
+        children: [
+            {
+                label: '简单表单',
+                key: 'simpleDy'
+            },
+        ],
+    },
+];
+
+const App: React.FC = () => {
+    const [current, setCurrent] = useState('mail');
+
+    const onClick: MenuProps['onClick'] = (e) => {
+        console.log('click ', e);
+        setCurrent(e.key);
+    };
+
+    return <div>
+        <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
+        <Outlet/>
+    </div>;
+};
+
 export default App;
