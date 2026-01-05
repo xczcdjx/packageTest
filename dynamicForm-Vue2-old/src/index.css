@@ -1,549 +1,69 @@
-.dynamicInput {
-  overflow: hidden;
-  padding: 15px
-}
-
-.dynamicInput.small .dyFormList {
-  gap: 6px
-}
-
-.dynamicInput.small .dyFormList .typeBtn {
-  padding: .2em .6em;
-  height: 18px
-}
-
-.dynamicInput.small .dyFormList > .dItem .input .key {
-  font-size: .7em
-}
-
-.dynamicInput.small .dyFormList > .dItem .input .vInput {
-  padding: .15em .4em
-}
-
-.dynamicInput.small .dyFormList > .dItem .input .vInput .slot {
-  white-space: nowrap
-}
-
-.dynamicInput.small .dyFormList > .dItem .input .vInput .slot > button {
-  padding: .1em .4em;
-  font-size: .8em
-}
-
-.dynamicInput.small .dyFormList > .dItem .btn .bt {
-  padding: .3em .8em
-}
-
-.dynamicInput.large .dyFormList {
-  gap: 15px
-}
-
-.dynamicInput.large .dyFormList .dItem {
-  -moz-column-gap: 20px;
-  column-gap: 20px
-}
-
-.dynamicInput.large .dyFormList .dItem .input .key {
-  font-size: 1.2em
-}
-
-.dynamicInput.large .dyFormList .dItem .input .vInput {
-  padding: .5em .4em
-}
-
-.dynamicInput.large .dyFormList .dItem .input .vInput input {
-  font-size: 1.2em
-}
-
-.dynamicInput.large .dyFormList .dItem .input .vInput .slot {
-  white-space: nowrap
-}
-
-.dynamicInput.large .dyFormList .dItem .input .vInput .slot > button {
-  padding: .15em .4em;
-  font-size: 1em
-}
-
-.dynamicInput.large .dyFormList .dItem .btn .bt {
-  padding: .8em 1.2em
-}
-
-.dynamicInput .dyFormList {
-  overflow: auto;
-  display: grid;
-  gap: 10px;
-  padding: 10px 5px
-}
-
-.dynamicInput .dyFormList .dItem {
-  width: 100%;
-  display: grid;
-  grid-template-columns:1fr 100px;
-  -moz-column-gap: 0;
-  column-gap: 0
-}
-
-.dynamicInput .dyFormList .dItem .input {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  -moz-column-gap: 15px;
-  column-gap: 15px
-}
-
-.dynamicInput .dyFormList .dItem .input .key {
-  text-align: center;
-  width: 150px
-}
-
-.dynamicInput .dyFormList .dItem .input .key.nativeInput {
-  border: 1px solid #d2d6dd;
-  padding: .5em .4em;
-  border-radius: 3px
-}
-
-.dynamicInput .dyFormList .dItem .input .key.nativeInput:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, .3)
-}
-
-.dynamicInput .dyFormList .dItem .input .vInput {
-  width: 100%;
-  border: 1px solid #d2d6dd;
-  padding: .2em .4em;
-  border-radius: 3px;
-  display: flex;
-  -moz-column-gap: 5px;
-  column-gap: 5px
-}
-
-.dynamicInput .dyFormList .dItem .input .vInput > .value {
-  border: none;
-  width: 100%
-}
-
-.dynamicInput .dyFormList .dItem .input .vInput > .value.nativeV {
-  letter-spacing: 3px
-}
-
-.dynamicInput .dyFormList .dItem .input .vInput > .value.nativeV:focus {
-  outline: none
-}
-
-.dynamicInput .dyFormList .dItem .input .vInput .slot {
-  white-space: nowrap
-}
-
-.dynamicInput .dyFormList .dItem .input .vInput .slot > button {
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
   font-weight: 400;
-  border-radius: 3px;
-  font-size: .8em
+
+  color-scheme: light dark;
+  /*color: rgba(255, 255, 255, 0.87);*/
+  /*background-color: #242424;*/
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.dynamicInput .dyFormList .dItem .btn {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  -moz-column-gap: 8px;
-  column-gap: 8px
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
 }
 
-.dynamicInput .dyFormList .dItem .btn .n-button {
-  font-size: 25px;
-  padding: 10px 12px
+body {
+  margin: 0;
+  padding: 15px;
+  /*display: flex;*/
+  /*place-items: center;*/
+  /*min-width: 320px;*/
+  /*min-height: 100vh;*/
 }
 
-.dynamicInput .dyFormList .dItem .btn .el-button + .el-button {
-  margin-left: 0
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
 }
 
-.dynamicInput .dyFormList .dItem .btn .bt {
-  padding: .5em 1em
-}
-
-.dynamicInput .isKey .el-input__inner, .dynamicInput .key .el-input__inner {
-  text-align: center
-}
-
-.dynamicInput .control {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5px;
-  -moz-column-gap: 10px;
-  column-gap: 10px
-}
-
-.dynamicInput .bt {
-  color: #fff;
-  border-radius: 5px;
+button {
+  border-radius: 8px;
   border: 1px solid transparent;
-  padding: .3em .8em;
-  font-size: .9em;
-  font-weight: 600;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: .25s;
-  opacity: .9
+  transition: border-color 0.25s;
 }
-
-.dynamicInput .bt:hover {
-  opacity: 1
-}
-
-.dynamicInput .bt:disabled {
-  opacity: .35;
-  cursor: not-allowed
-}
-
-.dynamicInput .default {
-  background: #fff;
-  color: #000;
-  border: 1px solid #d2d6dd
-}
-
-.dynamicInput .info {
-  background: #8a8e94
-}
-
-.dynamicInput .success {
-  background: #63ba39
-}
-
-.dynamicInput .danger {
-  background: #ea696a
-}
-
-.dynamicInput .aaa {
-  color: red
-}
-
-.dynamicCascadeInput {
-  overflow: hidden;
-  padding: 15px
-}
-
-.dynamicCascadeInput.small .dyFormList {
-  gap: 6px
-}
-
-.dynamicCascadeInput.small .dyFormList .typeBtn {
-  padding: .2em .6em;
-  height: 18px
-}
-
-.dynamicCascadeInput.small .dyFormList > .dItem .input .key {
-  font-size: .7em
-}
-
-.dynamicCascadeInput.small .dyFormList > .dItem .input .vInput {
-  padding: .15em .4em
-}
-
-.dynamicCascadeInput.small .dyFormList > .dItem .input .vInput .slot {
-  white-space: nowrap
-}
-
-.dynamicCascadeInput.small .dyFormList > .dItem .input .vInput .slot > button {
-  padding: .1em .4em;
-  font-size: .8em
-}
-
-.dynamicCascadeInput.small .dyFormList > .dItem .btn .bt {
-  padding: .3em .8em
-}
-
-.dynamicCascadeInput.large .dyFormList {
-  gap: 15px
-}
-
-.dynamicCascadeInput.large .dyFormList .dItem {
-  -moz-column-gap: 20px;
-  column-gap: 20px
-}
-
-.dynamicCascadeInput.large .dyFormList .dItem .input .key {
-  font-size: 1.2em
-}
-
-.dynamicCascadeInput.large .dyFormList .dItem .input .vInput {
-  padding: .5em .4em
-}
-
-.dynamicCascadeInput.large .dyFormList .dItem .input .vInput input {
-  font-size: 1.2em
-}
-
-.dynamicCascadeInput.large .dyFormList .dItem .input .vInput .slot {
-  white-space: nowrap
-}
-
-.dynamicCascadeInput.large .dyFormList .dItem .input .vInput .slot > button {
-  padding: .15em .4em;
-  font-size: 1em
-}
-
-.dynamicCascadeInput.large .dyFormList .dItem .btn .bt {
-  padding: .8em 1.2em
-}
-
-.dynamicCascadeInput .dyFormList {
-  overflow: auto;
-  display: grid;
-  gap: 10px;
-  padding: 10px 5px
-}
-
-.dynamicCascadeInput .dyFormList .dItem {
-  width: 100%;
-  display: grid;
-  grid-template-columns:1fr 100px;
-  -moz-column-gap: 0;
-  column-gap: 0
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  -moz-column-gap: 15px;
-  column-gap: 15px
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input .key {
-  text-align: center;
-  width: 150px
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input .key.nativeInput {
-  border: 1px solid #d2d6dd;
-  padding: .5em .4em;
-  border-radius: 3px
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input .key.nativeInput:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(0, 123, 255, .3)
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input .vInput {
-  width: 100%;
-  border: 1px solid #d2d6dd;
-  padding: .2em .4em;
-  border-radius: 3px;
-  display: flex;
-  -moz-column-gap: 5px;
-  column-gap: 5px
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input .vInput > .value {
-  border: none;
-  width: 100%
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input .vInput > .value.nativeV {
-  letter-spacing: 3px
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input .vInput > .value.nativeV:focus {
-  outline: none
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input .vInput .slot {
-  white-space: nowrap
+button:hover {
+  border-color: #646cff;
 }
-
-.dynamicCascadeInput .dyFormList .dItem .input .vInput .slot > button {
-  font-weight: 400;
-  border-radius: 3px;
-  font-size: .8em
-}
-
-.dynamicCascadeInput .dyFormList .dItem .btn {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  -moz-column-gap: 8px;
-  column-gap: 8px
-}
-
-.dynamicCascadeInput .dyFormList .dItem .btn .n-button {
-  font-size: 25px;
-  padding: 10px 12px
-}
-
-.dynamicCascadeInput .dyFormList .dItem .btn .el-button + .el-button {
-  margin-left: 0
-}
-
-.dynamicCascadeInput .dyFormList .dItem .btn .bt {
-  padding: .5em 1em
-}
-
-.dynamicCascadeInput .isKey .el-input__inner, .dynamicCascadeInput .key .el-input__inner {
-  text-align: center
-}
-
-.dynamicCascadeInput .control {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 5px;
-  -moz-column-gap: 10px;
-  column-gap: 10px
-}
-
-.dynamicCascadeInput .bt {
-  color: #fff;
-  border-radius: 5px;
-  border: 1px solid transparent;
-  padding: .3em .8em;
-  font-size: .9em;
-  font-weight: 600;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: .25s;
-  opacity: .9
-}
-
-.dynamicCascadeInput .bt:hover {
-  opacity: 1
-}
-
-.dynamicCascadeInput .bt:disabled {
-  opacity: .35;
-  cursor: not-allowed
-}
-
-.dynamicCascadeInput .default {
-  background: #fff;
-  color: #000;
-  border: 1px solid #d2d6dd
-}
-
-.dynamicCascadeInput .info {
-  background: #8a8e94
-}
-
-.dynamicCascadeInput .success {
-  background: #63ba39
-}
-
-.dynamicCascadeInput .danger {
-  background: #ea696a
-}
-
-.dynamicCascadeInput .aaa {
-  color: red
-}
-
-.dynamicCascadeInput .dyFormList .dItem {
-  width: inherit
-}
-
-.dynamicCascadeInput .dyFormList .dItem .vInput .surSlot {
-  white-space: nowrap
-}
-
-.dynamicCascadeInput .dyFormList .dItem .vInput .surSlot > button {
-  padding: .1em .4em;
-  font-size: .8em
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input .value.isKey {
-  text-align: center
-}
-
-.dynamicCascadeInput .dyFormList .dItem .input .value.isKey input {
-  font-weight: 700
-}
-
-.dynamicCascadeInput .dyFormList > .depth-1 {
-  display: grid;
-  border: 1px solid var(--c1);
-  border-style: dashed;
-  border-radius: 5px
-}
-
-.dynamicCascadeInput .dyFormList > .depth-1 > .dItem {
-  padding: 5px
-}
-
-.dynamicCascadeInput .dyFormList > .depth-1 .dItem + .dItem {
-  margin-top: 5px
-}
-
-.dynamicCascadeInput .dyFormList > .depth-1.no-pad > .dItem {
-  padding: 0
-}
-
-.dynamicCascadeInput .dyFormList .depth-1 .depth-2 {
-  border: 1px solid var(--c2);
-  border-style: dashed;
-  padding: 8px;
-  border-radius: 5px;
-  margin-top: 10px;
-  row-gap: -3px
-}
-
-.dynamicCascadeInput .dyFormList .depth-1 .depth-2 .dItem .btn .n-button {
-  transform: scale(.84)
-}
-
-.dynamicCascadeInput .dyFormList .depth-1 .depth-2 .depth-3 {
-  border: 1px solid var(--c3);
-  border-style: dashed;
-  padding: 7px;
-  border-radius: 5px;
-  margin-top: 9px;
-  row-gap: -5px
-}
-
-.dynamicCascadeInput .dyFormList .depth-1 .depth-2 .depth-3 .dItem .btn .n-button {
-  transform: scale(.76)
-}
-
-.dynamicCascadeInput .dyFormList .depth-1 .depth-2 .depth-3 .depth-4 {
-  border: 1px solid var(--c4);
-  border-style: dashed;
-  padding: 6px;
-  border-radius: 5px;
-  margin-top: 8px;
-  row-gap: -7px
-}
-
-.dynamicCascadeInput .dyFormList .depth-1 .depth-2 .depth-3 .depth-4 .dItem .btn .n-button {
-  transform: scale(.68)
-}
-
-.dynamicCascadeInput .dyFormList .depth-1 .depth-2 .depth-3 .depth-4 .depth-5 {
-  border: 1px solid var(--c5);
-  border-style: dashed;
-  padding: 5px;
-  border-radius: 5px;
-  margin-top: 7px;
-  row-gap: -9px
-}
-
-.dynamicCascadeInput .dyFormList .depth-1 .depth-2 .depth-3 .depth-4 .depth-5 .dItem .btn .n-button {
-  transform: scale(.6)
-}
-
-.dynamicCascadeInput .dyFormList .no-border {
-  border: none !important
-}
-
-.dynamicCascadeInput .dyFormList .no-pad {
-  padding: 0 !important
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
 }
 
-@media (max-width: 756px) {
-  .dynamicInput .dyFormList .dItem .input .key {
-    width: 50px
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
   }
-
-  .dynamicInput .dyFormList .dItem .input .value {
-    width: calc(100% - 60px)
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
   }
 }

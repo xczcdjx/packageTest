@@ -2,13 +2,16 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import './index.css'
 import 'dynamicformdjx-vue2/dist/index.css'
-// import './index.css'
+import router from "./router";
 Vue.config.productionTip = false
-
+Vue.use(ElementUI)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  components: { App },
-  template: '<App/>'
+  router,
+  render: h => h(App)
 })
