@@ -1,6 +1,6 @@
 import {createBrowserRouter} from "react-router";
 import SingleInput from "@/views/input/SingleInput";
-import CascadeInput from "@/views/input/CascadeInput.tsx";
+import CascadeInput from "@/views/input/CascadeInput";
 import App from "@/App";
 
 const routes = createBrowserRouter([
@@ -10,7 +10,7 @@ const routes = createBrowserRouter([
         children: [
             {index: true, Component: SingleInput},
             {
-                path: "/cascade-input",
+                path: "input-cascade",
                 Component: CascadeInput,
             },
         ]

@@ -1,8 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {AppstoreOutlined, MailOutlined, SettingOutlined} from '@ant-design/icons';
-import type {MenuProps} from 'antd';
+import {ConfigProvider, MenuProps, theme} from 'antd';
 import {Menu} from 'antd';
-import {Outlet} from "react-router";
+import {Outlet, useLocation, useNavigate, useSearchParams} from "react-router";
+import {getCurKey, getStrTheme} from "@/utils/tools.ts";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -27,24 +28,38 @@ const items: MenuItem[] = [
         children: [
             {
                 label: '简单表单',
-                key: 'simpleDy'
+                key: 'simpleDy',
+                disabled: true
             },
         ],
     },
 ];
 
 const App: React.FC = () => {
-    const [current, setCurrent] = useState('mail');
-
+    const route = useLocation()
+    const [current, setCurrent] = useState(getCurKey(route.pathname));
+    const [isDark, setIsDark] = useState<boolean>(getStrTheme(route.search) === 'dark');
+    const navigate = useNavigate();
     const onClick: MenuProps['onClick'] = (e) => {
-        console.log('click ', e);
+        let path = e.keyPath.reverse().join('-')
+        if (e.key === 'single') path = '/'
+        navigate(path)
         setCurrent(e.key);
     };
+    useEffect(() => {
+        window.addEventListener('message', (e) => {
+            if (!e.data || e.data.type !== 'theme') return
+            const theme = e.data.value // 'dark' | 'light'
+            document.documentElement.classList.toggle('dark', theme === 'dark')
+            setIsDark(theme === 'dark')
+        })
+    }, [])
 
-    return <div>
+    return <ConfigProvider theme={{algorithm: isDark ? theme.darkAlgorithm : undefined}}>
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
         <Outlet/>
-    </div>;
+    </ConfigProvider>;
 };
+
 
 export default App;
