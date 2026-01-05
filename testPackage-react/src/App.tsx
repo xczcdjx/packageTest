@@ -46,13 +46,19 @@ const App: React.FC = () => {
         navigate(path)
         setCurrent(e.key);
     };
+
+    function handleTheme(e: any) {
+        if (!e.data || e.data.type !== 'theme') return
+        const theme = e.data.value // 'dark' | 'light'
+        document.documentElement.classList.toggle('dark', theme === 'dark')
+        setIsDark(theme === 'dark')
+    }
+
     useEffect(() => {
-        window.addEventListener('message', (e) => {
-            if (!e.data || e.data.type !== 'theme') return
-            const theme = e.data.value // 'dark' | 'light'
-            document.documentElement.classList.toggle('dark', theme === 'dark')
-            setIsDark(theme === 'dark')
-        })
+        window.addEventListener('message', handleTheme)
+        return () => {
+            window.removeEventListener('message', handleTheme)
+        }
     }, [])
 
     return <ConfigProvider theme={{algorithm: isDark ? theme.darkAlgorithm : undefined}}>
