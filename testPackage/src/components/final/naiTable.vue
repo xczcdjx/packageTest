@@ -10,14 +10,13 @@
   <div class="controlBtn">
     <n-button type="success" size="small" @click="addItem">Add</n-button>
   </div>
-  <n-space vertical :size="12">
     <n-data-table
         :single-line="false"
         :columns="columns"
         :data="tableData"
+        :loading="tableLoading"
         :pagination="pagination"
     />
-  </n-space>
   <div class="update">
     <n-modal v-model:show="showModal" :title="referId==='-1'?'add Item':'update Item'" preset="card" draggable
              :style="{width:'70%'}">
@@ -35,7 +34,7 @@
 <script setup lang="ts">
 import {type DataTableColumns, NSpace} from 'naive-ui'
 import {NButton, NTag, useMessage} from 'naive-ui'
-import {h, nextTick, ref} from 'vue'
+import {h, nextTick, onMounted, ref} from 'vue'
 import {NaiDynamicForm, type naiDynamicFormRef, renderInput, renderRadioGroup} from "dynamicformdjx/naiveUi";
 import {useDyForm, useReactiveForm} from "dynamicformdjx";
 import {renderSelect} from "dynamicformdjx/elementPlus";
@@ -137,7 +136,8 @@ const columns: DataTableColumns<RowData> = [
     }
   }
 ]
-const tableData = ref(data)
+const tableData = ref<RowData[]>([])
+const tableLoading = ref<boolean>(false)
 const showModal = ref<boolean>(false)
 const referId = ref<string | number>('-1')
 const handleDynamicFormRef = ref<naiDynamicFormRef | null>(null)
@@ -242,9 +242,19 @@ async function formSubmit() {
     }
     nextTick(() => {
       showModal.value = false
+      // fetchData()
     })
   })
 }
+
+async function fetchData() {
+  tableLoading.value = true
+  const res = await new Promise((resolve, reject) => setTimeout(() => resolve(data), 2000))
+  tableData.value = res as RowData[]
+  tableLoading.value = false
+}
+
+onMounted(fetchData)
 </script>
 <style scoped>
 .title {
