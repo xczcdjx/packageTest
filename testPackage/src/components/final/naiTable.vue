@@ -1,15 +1,18 @@
 <template>
-  <div class="title">Nai Form Table Test</div>
-  <div class="search">
-    <NaiDynamicForm :items="searchFormItems" ref="searchDynamicFormRef" preset="grid"/>
-    <div class="searchBtn">
-      <n-button type="info" size="small" @click="doSearch">Search</n-button>
-      <n-button size="small" @click="doReset">Reset</n-button>
-    </div>
-  </div>
-  <div class="controlBtn">
-    <n-button type="success" size="small" @click="addItem">Add</n-button>
-  </div>
+  <n-card>
+    <template #header>
+      <div class="title">Nai Form Table Test</div>
+      <div class="search">
+        <NaiDynamicForm :items="searchFormItems" ref="searchDynamicFormRef" preset="grid"/>
+        <div class="searchBtn">
+          <n-button type="info" size="small" @click="doSearch">Search</n-button>
+          <n-button size="small" @click="doReset">Reset</n-button>
+        </div>
+      </div>
+      <div class="controlBtn">
+        <n-button type="success" size="small" @click="addItem">Add</n-button>
+      </div>
+    </template>
     <n-data-table
         :single-line="false"
         :columns="columns"
@@ -17,6 +20,12 @@
         :loading="tableLoading"
         :pagination="pagination"
     />
+    <!--    <template #footer>
+          <div class="pagination">
+            <n-pagination :item-count="tableData.length"/>
+          </div>
+        </template>-->
+  </n-card>
   <div class="update">
     <n-modal v-model:show="showModal" :title="referId==='-1'?'add Item':'update Item'" preset="card" draggable
              :style="{width:'70%'}">
@@ -94,6 +103,7 @@ const columns: DataTableColumns<RowData> = [
     title: 'Tags',
     key: 'tags',
     render(row) {
+      if (row.tags === null) return h('div', {}, '-')
       const tags = row.tags.map((tagKey) => {
         return h(
             NTag,
@@ -195,11 +205,13 @@ const handleFormItems = useReactiveForm<RowData>([
 ])
 const useHandleForm = useDyForm(handleFormItems)
 const doSearch = () => {
-  const params = searchDynamicFormRef.value?.getResult?.()
-  console.log(params)
+  const params = searchDynamicFormRef.value?.getResult?.() as any
+  message.info(JSON.stringify(params))
+  tableData.value = tableData.value.filter(it => it.name.includes(params.name) || it.age === parseInt(params.age))
 }
 const doReset = () => {
   searchDynamicFormRef.value?.reset?.()
+  tableData.value = data
 }
 const addItem = () => {
   useHandleForm.onReset()
@@ -229,16 +241,17 @@ function formCancel() {
 
 async function formSubmit() {
   // const data = useHandleForm.getValues()
+  console.log(referId.value)
   handleDynamicFormRef.value?.validator().then((v: any) => {
     if (referId.value === '-1') {
       tableData.value.push({...v, key: Date.now()})
       message.success('Add successful')
     } else {
       tableData.value = tableData.value.map(it => {
-        if (v.key === it.key) return v as RowData
+        if (referId.value === it.key) return v as RowData
         return it
       })
-      message.success('Add successful')
+      message.success('Update successful')
     }
     nextTick(() => {
       showModal.value = false
@@ -249,7 +262,7 @@ async function formSubmit() {
 
 async function fetchData() {
   tableLoading.value = true
-  const res = await new Promise((resolve, reject) => setTimeout(() => resolve(data), 2000))
+  const res = await new Promise((resolve, reject) => setTimeout(() => resolve(data), 1000))
   tableData.value = res as RowData[]
   tableLoading.value = false
 }
@@ -268,7 +281,12 @@ onMounted(fetchData)
 }
 
 .controlBtn {
-  margin-bottom: 10px;
+  //margin-bottom: 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
 }
 
 .search .searchBtn {
