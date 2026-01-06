@@ -16,15 +16,23 @@
     <n-data-table
         :single-line="false"
         :columns="columns"
-        :data="tableData"
+        :data="pagedData"
         :loading="tableLoading"
-        :pagination="pagination"
     />
-    <!--    <template #footer>
-          <div class="pagination">
-            <n-pagination :item-count="tableData.length"/>
-          </div>
-        </template>-->
+    <template #footer>
+      <div class="pagination">
+        <n-pagination v-model:page="pageModal.pageNo"
+                      v-model:page-size="pageModal.pageSize"
+                      :item-count="tableData.length"
+                      :page-sizes="[10, 20, 50]"
+                      show-quick-jumper
+                      show-size-picker>
+          <template #prefix="{ itemCount, startIndex }">
+            Total {{ itemCount }}
+          </template>
+        </n-pagination>
+      </div>
+    </template>
   </n-card>
   <div class="update">
     <n-modal v-model:show="showModal" :title="referId==='-1'?'add Item':'update Item'" preset="card" draggable
@@ -43,10 +51,9 @@
 <script setup lang="ts">
 import {type DataTableColumns, NSpace} from 'naive-ui'
 import {NButton, NTag, useMessage} from 'naive-ui'
-import {h, nextTick, onMounted, ref} from 'vue'
-import {NaiDynamicForm, type naiDynamicFormRef, renderInput, renderRadioGroup} from "dynamicformdjx/naiveUi";
+import {computed, h, nextTick, onMounted, reactive, ref} from 'vue'
+import {NaiDynamicForm, type naiDynamicFormRef, renderInput, renderSelect} from "dynamicformdjx/naiveUi";
 import {useDyForm, useReactiveForm} from "dynamicformdjx";
-import {renderSelect} from "dynamicformdjx/elementPlus";
 
 const message = useMessage()
 
@@ -58,10 +65,10 @@ interface RowData {
   tags: string[]
 }
 
-const pagination = {
-  pageSize: 10
+type PageModal = {
+  pageSize: number
+  pageNo: number
 }
-
 const data = [
   {
     key: 0,
@@ -150,8 +157,14 @@ const tableData = ref<RowData[]>([])
 const tableLoading = ref<boolean>(false)
 const showModal = ref<boolean>(false)
 const referId = ref<string | number>('-1')
+const pageModal = reactive<PageModal>({pageNo: 1, pageSize: 10})
 const handleDynamicFormRef = ref<naiDynamicFormRef | null>(null)
 const searchDynamicFormRef = ref<naiDynamicFormRef | null>(null)
+const pagedData = computed(() => {
+  const {pageNo, pageSize} = pageModal
+  const start = (pageNo - 1) * pageSize
+  return tableData.value.slice(start, start + pageSize)
+})
 const searchFormItems = useReactiveForm<RowData>([
   {
     key: "name",
@@ -208,10 +221,12 @@ const doSearch = () => {
   const params = searchDynamicFormRef.value?.getResult?.() as any
   message.info(JSON.stringify(params))
   tableData.value = tableData.value.filter(it => it.name.includes(params.name) || it.age === parseInt(params.age))
+  pageModal.pageNo = 1
 }
 const doReset = () => {
   searchDynamicFormRef.value?.reset?.()
   tableData.value = data
+  pageModal.pageNo = 1
 }
 const addItem = () => {
   useHandleForm.onReset()
@@ -278,10 +293,6 @@ onMounted(fetchData)
 
 .search {
   margin: 10px 0;
-}
-
-.controlBtn {
-  //margin-bottom: 10px;
 }
 
 .pagination {
