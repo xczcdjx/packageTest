@@ -2,7 +2,13 @@
 import {ref} from "vue";
 import {ElButton} from "element-plus";
 import {useDyForm, useReactiveForm} from "dynamicformdjx";
-import {type eleDynamicFormRef, renderInput, renderRadioGroup, EleDynamicForm} from "dynamicformdjx/elementPlus";
+import {
+  type eleDynamicFormRef,
+  renderInput,
+  renderRadioGroup,
+  EleDynamicForm,
+  renderSelect
+} from "dynamicformdjx/elementPlus";
 import type {PresetType} from "dynamicformdjx/types/index";
 
 type FormRow = {
@@ -20,7 +26,7 @@ const formItems = useReactiveForm<FormRow>([
     clearable: true,
     placeholder: '请输入姓名',
     required: true, // 是否必填 (简化rules规则)
-    render2: f => renderInput(f.value, {}, f),
+    render2: f => renderInput(f.value, {showPassword: true}, f),
     span: 8
   },
   {
@@ -31,7 +37,10 @@ const formItems = useReactiveForm<FormRow>([
     type: 'password',
     required: true,
     placeholder: '请输入密码',
-    render2: f => renderInput(f.value, {showPassword: true}, f),
+    // render2: f => renderInput(f.value, {showPassword: true}, f),
+    render2: f => renderSelect(f.value, [], {
+      options: []
+    }, f),
     span: 8,
     offset: 2,
     requiredHint: l => `${l} is not empty`
@@ -43,7 +52,7 @@ const formItems = useReactiveForm<FormRow>([
     render2: f => renderRadioGroup(f.value, [
       {label: '整行', value: 'fullRow'},
       {label: '表格', value: 'grid'},
-    ], {name: 'preset'}, f),
+    ], {name: 'preset', class: {}}, f),
     onChange: (v) => {
       presetType.value = v
     }

@@ -7,7 +7,10 @@
 <!--    <custom-dy-form-test/>-->
 <!--    <decorate-dy-form-test/>-->
 <!--    <ele-decorate-dy-form-test/>-->
-    <ele-simple-dynamic-form-test/>
+<!--    <ele-simple-dynamic-form-test/>-->
+    <n-message-provider>
+      <nai-table/>
+    </n-message-provider>
   </div>
 </template>
 
@@ -20,6 +23,7 @@ import CustomDyFormTest from "./components/customDyFormTest.vue";*/
 import DecorateDyFormTest from "./components/decorateDyFormTest.vue";
 import EleDecorateDyFormTest from "./components/eleDecorateDyFormTest.vue";
 import EleSimpleDynamicFormTest from "./components/eleSimpleDynamicFormTest.vue";
+import NaiTable from "@/components/final/naiTable.vue";
 // import CascadeForm from "./components/cascadeForm.vue";
 </script>
 
