@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import {ElButton} from "element-plus";
 import {useDyForm} from "dynamicformdjx";
 import {
   type eleDynamicFormRef,
   EleDynamicForm,
   useDecorateForm,
-  renderDatePicker
+  renderDatePicker, renderDynamicTags
 } from "dynamicformdjx/elementPlus";
-
 
 type FormRow = {
   password: string
   job: number
-  birthday: number
+  birthday: number | Date
+  future: number[]
+  checkbox: number
+  slider: number
+  inputNumber: number
 }
 const eleDynamicFormRef = ref<eleDynamicFormRef | null>(null)
 const formItems = useDecorateForm<FormRow>([
@@ -27,7 +29,7 @@ const formItems = useDecorateForm<FormRow>([
     type: 'password',
     renderType: 'renderInput',
     renderProps: {
-      showPassword: true
+      showPassword: 'click'
     }
   },
   {
@@ -35,7 +37,6 @@ const formItems = useDecorateForm<FormRow>([
     label: "职位",
     value: null,
     clearable: true,
-    sort: 0,
     options: ['前端', '后端'].map((label, value) => ({label, value})),
     renderType: 'renderSelect',
   },
@@ -45,23 +46,59 @@ const formItems = useDecorateForm<FormRow>([
     value: null,
     render2: f => renderDatePicker(f.value, {type: 'datetime'}, f),
   },
+  {
+    key: "future",
+    label: "未来",
+    valueField: 'value',
+    value: [
+      {label: '你没见过不等于没有', value: 'hello world 1'},
+      {
+        label: '不要给自己设限',
+        value: 'hello world 2'
+      },
+      {
+        label: '不要说连升两级',
+        value: 'hello world 3'
+      },
+      {
+        label: '直接升到 CEO 都是有可能的',
+        value: 'hello world 4'
+      }
+    ],
+    render2: f => renderDynamicTags(f.value, {tagType: 'primary'}, f)
+  },
+  {
+    key: "checkbox",
+    label: "复选",
+    value: null,
+    renderType: 'renderCheckbox',
+  },
+  {
+    key: "slider",
+    label: "滑块",
+    value: 0,
+    renderType: 'renderSlider',
+  },
+  {
+    key: "inputNumber",
+    label: "滑块",
+    value: 0,
+    renderType: 'renderInputNumber',
+  },
 ])
 const useForm = useDyForm<FormRow>(formItems)
 const getData = () => {
   const res = eleDynamicFormRef.value?.getResult?.()
   console.log(res)
 }
-const resetData = () => {
-  eleDynamicFormRef.value?.reset?.()
-}
-const setData = () => {
-  useForm.setValues({
-    password: 'element-plus',
-    job: 0,
-    birthday: Date.now(),
-  })
-}
+const resetData = () => eleDynamicFormRef.value?.reset?.()
+const setData = () => useForm.setValues({
+  password: 'element-plus',
+  job: 0,
+  birthday: new Date(),
+})
 const validatorData = () => {
+  // 校验
   eleDynamicFormRef.value?.validator().then(data => {
     console.log(data)
   }).catch(err => {

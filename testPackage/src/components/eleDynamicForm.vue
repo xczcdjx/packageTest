@@ -1,13 +1,15 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
-import {ElButton} from "element-plus";
 import {useDyForm, useReactiveForm} from "dynamicformdjx";
 import {
   type eleDynamicFormRef, EleDynamicForm, renderInput, renderCheckboxGroup, renderDatePicker,
   renderPopSelect,
-  renderRadioButtonGroup, renderRadioGroup,
-  renderSelect, renderSwitch, renderTimePicker, renderTreeSelect
+  renderRadioGroup,
+  renderSelect, renderSwitch, renderTimePicker, renderTreeSelect, renderInputNumber,
+  renderDynamicTags,
+  renderCheckbox,
+  renderSlider
 } from "dynamicformdjx/elementPlus";
 import type {FormItemRule, FormRules} from "element-plus";
 
@@ -26,6 +28,10 @@ type FormRow = {
   job: number
   job2: number
   job3: number
+  future: any[]
+  slider: number
+  checkbox: boolean
+  inputNumber: number
 }
 const rules: FormRules<FormRow> = {
   username: {
@@ -54,7 +60,7 @@ const formItems = useReactiveForm<FormRow, FormRules | FormItemRule>([
     clearable: true,
     type: 'password',
     placeholder: '请输入密码',
-    render2: f => renderInput(f.value, {showPassword: true,}, f),
+    render2: f => renderInput(f.value, {showPasswordOn: 'click',}, f),
   },
   {
     key: "desc",
@@ -148,6 +154,49 @@ const formItems = useReactiveForm<FormRow, FormRules | FormItemRule>([
     value: ref<Date>(new Date()),
     render2: f => renderTimePicker(f.value, {}, f),
   },
+  {
+    key: "future",
+    label: "未来",
+    labelField: 'label',
+    valueField: 'value',
+    value: ref([
+      {label: '你没见过不等于没有', value: 'hello world 1'},
+      {
+        label: '不要给自己设限',
+        value: 'hello world 2'
+      },
+      {
+        label: '不要说连升两级',
+        value: 'hello world 3'
+      },
+      {
+        label: '直接升到 CEO 都是有可能的',
+        value: 'hello world 4'
+      }
+    ]),
+    render2: f => {
+      const {value, ...restF} = f as any
+      return renderDynamicTags(f.value, {tagType: 'primary'}, restF)
+    }
+  },
+  {
+    key: "checkbox",
+    label: "复选",
+    value: ref<boolean | null>(null),
+    render2: f => renderCheckbox(f.value, {}, f),
+  },
+  {
+    key: "slider",
+    label: "滑块",
+    value: ref<number | number[]>(0),
+    render2: f => renderSlider(f.value, {}, f),
+  },
+  {
+    key: "inputNumber",
+    label: "滑块",
+    value: ref<number | null>(0),
+    render2: f => renderInputNumber(f.value, {}, f),
+  },
 ])
 const useForm = useDyForm<FormRow>(formItems)
 const getData = () => {
@@ -164,7 +213,7 @@ const setData = () => {
 }
 const validatorData = () => {
   // 校验
-  eleDynamicFormRef.value?.validator().then(data => {
+  eleDynamicFormRef.value.validator().then(data => {
     console.log(data)
   }).catch(err => {
     console.log(err)

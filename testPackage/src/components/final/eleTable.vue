@@ -16,49 +16,50 @@
       </div>
     </template>
 
-    <el-table
-        v-loading="tableLoading"
-        :data="pagedData"
-        border
-        style="width: 100%"
-    >
-      <el-table-column :prop="r.prop" :label="r.label" v-for="r in tableProps" :key="r.prop">
-        <template #scope="row">
-          <template v-if="r.prop!=='tags'">{{ row[r.prop] }}</template>
-          <template v-else>
-            <span v-if="!row.tags || row.tags.length === 0">-</span>
-            <template v-else>
-              <el-tag
-                  v-for="t in row.tags"
-                  :key="t"
-                  class="tag"
-                  type="info"
-                  effect="plain"
-              >
-                {{ t }}
-              </el-tag>
-            </template>
-          </template>
-        </template>
-      </el-table-column>
+   <div class="tableScroll">
+     <el-table
+         v-loading="tableLoading"
+         :data="pagedData"
+         border
+         style="min-width: 900px"
+     >
+       <el-table-column :prop="r.prop" :label="r.label" v-for="r in tableProps" :key="r.prop">
+         <template #scope="row">
+           <template v-if="r.prop!=='tags'">{{ row[r.prop] }}</template>
+           <template v-else>
+             <span v-if="!row.tags || row.tags.length === 0">-</span>
+             <template v-else>
+               <el-tag
+                   v-for="t in row.tags"
+                   :key="t"
+                   class="tag"
+                   type="info"
+                   effect="plain"
+               >
+                 {{ t }}
+               </el-tag>
+             </template>
+           </template>
+         </template>
+       </el-table-column>
 
-      <el-table-column label="Action" width="180">
-        <template #default="{ row }">
-          <el-space>
-            <el-button size="small" @click="upItem(row)">update</el-button>
-            <el-button size="small" type="danger" @click="delItem(row)">delete</el-button>
-          </el-space>
-        </template>
-      </el-table-column>
-    </el-table>
+       <el-table-column label="Action" width="180" fixed="right">
+         <template #default="{ row }">
+           <el-space>
+             <el-button size="small" @click="upItem(row)">update</el-button>
+             <el-button size="small" type="danger" @click="delItem(row)">delete</el-button>
+           </el-space>
+         </template>
+       </el-table-column>
+     </el-table>
+   </div>
 
     <div class="pagination">
       <el-pagination
           v-model:current-page="pageModal.pageNo"
           v-model:page-size="pageModal.pageSize"
-          :page-sizes="[10, 20, 50]"
           :total="tableData.length"
-          layout="total, sizes, prev, pager, next, jumper"
+          layout="total, prev, pager, next"
       />
     </div>
   </el-card>
@@ -140,7 +141,7 @@ const searchFormItems = useReactiveForm<RowData>([
     value: null,
     clearable: true,
     render2: f => renderInput(f.value, {}, f),
-    span: 6
+    span: 12
   },
   {
     key: 'age',
@@ -148,7 +149,7 @@ const searchFormItems = useReactiveForm<RowData>([
     value: null,
     clearable: true,
     render2: f => renderInput(f.value, {}, f),
-    span: 6
+    span: 12
   }
 ])
 
@@ -237,9 +238,6 @@ async function formSubmit() {
       tableData.value = tableData.value.map(r =>
           r.key === referId.value ? ({...r, ...(v as any), key: r.key} as RowData) : r
       )
-      tableData.value = tableData.value.map(r =>
-          r.key === referId.value ? ({...r, ...(v as any), key: r.key} as RowData) : r
-      )
       ElMessage.success('Update successful')
     }
 
@@ -269,7 +267,10 @@ onMounted(fetchData)
 .search {
   margin: 10px 0;
 }
-
+.tableScroll{
+  width: 100%;
+  overflow-x: auto;
+}
 .pagination {
   display: flex;
   justify-content: center;

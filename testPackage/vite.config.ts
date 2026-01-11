@@ -10,6 +10,13 @@ export default defineConfig({
     extensions: [".mjs", ".js", ".ts", ".jsx", ".tsx", ".json"],
   },
   server:{
-    port:6002
-  }
+    port:6002,
+    watch: {
+      // 默认忽略 node_modules；用否定规则把你的包放出来
+      ignored: ['!**/node_modules/dynamicformdjx/**'],
+    },
+  },
+  optimizeDeps: {
+    exclude: ['dynamicformdjx'],
+  },
 })
