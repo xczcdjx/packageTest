@@ -71,7 +71,7 @@ const formItems = useReactiveForm<FormRow, FormRules | FormItemRule>([
 ])
 const useForm = useDyForm<FormRow>(formItems)
 const getData = () => {
-  console.log(useForm.getValues())
+  console.log(useForm.getValue('json'))
 }
 const resetData = () => {
   useForm.onReset()

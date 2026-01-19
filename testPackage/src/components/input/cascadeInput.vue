@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import {NaiveUiDynamicCascadeForm} from "dynamicformdjx/naiveUi";
+import {NaiDynamicCascadeInput} from "dynamicformdjx/naiveUi";
 
 const test2 = ref({
   a: 'Hello world',
@@ -11,7 +11,7 @@ const test2 = ref({
 
 <template>
   <p>Cascade dynamicForm</p>
-  <naive-ui-dynamic-cascade-form v-model="test2" is-controller/>
+  <nai-dynamic-cascade-input v-model="test2" is-controller/>
   <pre>{{ test2 }}</pre>
 </template>
 
