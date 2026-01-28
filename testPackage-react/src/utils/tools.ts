@@ -4,5 +4,10 @@ export function getStrTheme(str:string) {
     return theme??'light'
 }
 export function getCurKey(p: string) {
-    return p === '/' ? 'single' : p.replace('/', '').split('-')[1] ?? ''
+    let splitSym='-'
+    if (p.includes('orm')) {
+        if (p==='/form') return 'simpleForm'
+        splitSym = '/'
+    }
+    return p === '/' ? 'single' : p.replace('/', '').split(splitSym)[1] ?? ''
 }

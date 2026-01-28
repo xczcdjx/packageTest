@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import {AppstoreOutlined, MailOutlined, SettingOutlined} from '@ant-design/icons';
 import {ConfigProvider, MenuProps, theme} from 'antd';
 import {Menu} from 'antd';
 import {Outlet, useLocation, useNavigate, useSearchParams} from "react-router";
@@ -28,8 +27,11 @@ const items: MenuItem[] = [
         children: [
             {
                 label: '简单表单',
-                key: 'simpleDy',
-                disabled: true
+                key: 'simpleForm',
+            },
+            {
+                label: '自定义表单',
+                key: 'customForm',
             },
         ],
     },
@@ -37,12 +39,18 @@ const items: MenuItem[] = [
 
 const App: React.FC = () => {
     const route = useLocation()
+    console.log(getCurKey(route.pathname),route.pathname)
     const [current, setCurrent] = useState(getCurKey(route.pathname));
     const [isDark, setIsDark] = useState<boolean>(getStrTheme(route.search) === 'dark');
     const navigate = useNavigate();
     const onClick: MenuProps['onClick'] = (e) => {
         let path = e.keyPath.reverse().join('-')
+        console.log(e.key)
         if (e.key === 'single') path = '/'
+        else if (e.key.includes('orm')) {
+            if (e.key==='simpleForm') path='/form'
+            else path=['/form'].concat(e.key).join('/')
+        }
         navigate(path)
         setCurrent(e.key);
     };
@@ -63,6 +71,7 @@ const App: React.FC = () => {
 
     return <ConfigProvider theme={{algorithm: isDark ? theme.darkAlgorithm : undefined}}>
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
+        <br/>
         <Outlet/>
     </ConfigProvider>;
 };
