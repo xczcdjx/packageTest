@@ -10,6 +10,7 @@ import {
 } from "dynamicformdjx-react/antd";
 import {useDyForm, useReactiveForm} from "dynamicformdjx-react";
 import type {Rule} from "antd/es/form";
+import {alertResult} from "@/utils/link.ts";
 
 type RowProps = {
     username: string
@@ -155,7 +156,8 @@ const AllForm = () => {
         {
             key: "future",
             label: "未来",
-            value: [
+            value: Array.from({length:4}).map((_,i)=>`hello world ${i+1}`),
+            options: [
                 {label: '你没见过不等于没有', value: 'hello world 1'},
                 {
                     label: '不要给自己设限',
@@ -170,7 +172,7 @@ const AllForm = () => {
                     value: 'hello world 4'
                 }
             ],
-            render2: f => renderDynamicTags(f.value, {}, f),
+            render2: f => renderDynamicTags([], {}, f),
         },
         {
             key: "checkbox",
@@ -209,7 +211,7 @@ const AllForm = () => {
                 <Button color={'green'} variant={'outlined'} onClick={() => {
                     // const res=antdFormRef.current?.getResult?.()
                     const res = useForm.getValues()
-                    console.log(res)
+                    alertResult(res)
                 }}>getData</Button>
                 <Button color={'orange'} variant={'outlined'} onClick={() => {
                     useForm.setValues({
@@ -218,9 +220,7 @@ const AllForm = () => {
                     })
                 }}>setData</Button>
                 <Button color={'blue'} variant={'outlined'} onClick={() => {
-                    antdFormRef.current?.validator().then(v => {
-                        console.log(v)
-                    }).catch(r => {
+                    antdFormRef.current?.validator().then(alertResult).catch(r => {
                         console.log(r)
                     })
                 }}>validator</Button>

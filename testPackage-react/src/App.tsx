@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {ConfigProvider, MenuProps, theme} from 'antd';
 import {Menu} from 'antd';
 import {Outlet, useLocation, useNavigate, useSearchParams} from "react-router";
-import {getCurKey, getStrTheme} from "@/utils/tools.ts";
+import {getCurKey, getStrUrl} from "@/utils/tools.ts";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -49,11 +49,12 @@ const App: React.FC = () => {
     const route = useLocation()
     // console.log(getCurKey(route.pathname),route.pathname)
     const [current, setCurrent] = useState(getCurKey(route.pathname));
-    const [isDark, setIsDark] = useState<boolean>(getStrTheme(route.search) === 'dark');
+    const [isDark, setIsDark] = useState<boolean>(getStrUrl(route.search) === 'dark');
+    const [hideMenu] = useState<boolean>(getStrUrl(route.search,'hideMenu') === 'true');
     const navigate = useNavigate();
     const onClick: MenuProps['onClick'] = (e) => {
         let path = e.keyPath.reverse().join('-')
-        console.log(e.key)
+        // console.log(e.key)
         if (e.key === 'single') path = '/'
         else if (e.key.includes('orm')) {
             if (e.key==='simpleForm') path='/form'
@@ -80,8 +81,12 @@ const App: React.FC = () => {
     }, [isDark]);
 
     return <ConfigProvider theme={{algorithm: isDark ? theme.darkAlgorithm : undefined}}>
-        <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
-        <br/>
+        {
+            !hideMenu&&<>
+                <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
+                <br/>
+            </>
+        }
         <Outlet/>
     </ConfigProvider>;
 };

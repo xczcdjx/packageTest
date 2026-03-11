@@ -7,6 +7,7 @@ import {
 } from "dynamicformdjx-react/antd";
 import {useRef} from "react";
 import {Button} from "antd";
+import {alertResult} from "@/utils/link.ts";
 
 type FormRow = {
     password: string
@@ -76,7 +77,7 @@ const DecorateForm = () => {
                 <Button color={'green'} variant={'outlined'} onClick={() => {
                     // const res=antdFormRef.current?.getResult?.()
                     const res = useForm.getValues()
-                    console.log(res)
+                    alertResult(res)
                 }}>getData</Button>
                 <Button color={'orange'} variant={'outlined'} onClick={() => {
                     useForm.setValues({
@@ -86,9 +87,7 @@ const DecorateForm = () => {
                     })
                 }}>setData</Button>
                 <Button color={'blue'} variant={'outlined'} onClick={() => {
-                    antdFormRef.current?.validator().then(v => {
-                        console.log(v)
-                    }).catch(r => {
+                    antdFormRef.current?.validator().then(alertResult).catch(r => {
                         console.log(r)
                     })
                 }}>validator</Button>

@@ -10,12 +10,14 @@ import {
 } from "dynamicformdjx-react";
 import {AdDynamicForm, type adDynamicFormRef} from "dynamicformdjx-react/antd";
 import type {Rule} from "antd/es/form";
+import {alertResult} from "@/utils/link.ts";
 
 type RowProps = {
     username: string
     job: string
     json: object
 }
+
 const CustomForm = () => {
     const [formItems, setFormItems] = useReactiveForm<RowProps, Rule | Rule[]>([
         {
@@ -94,7 +96,7 @@ const CustomForm = () => {
                 <Button color={'green'} variant={'outlined'} onClick={() => {
                     // const res=antdFormRef.current?.getResult?.()
                     const res = useForm.getValues()
-                    console.log(res)
+                    alertResult(res)
                 }}>getData</Button>
                 <Button color={'orange'} variant={'outlined'} onClick={() => {
                     useForm.setValues({
@@ -108,9 +110,7 @@ const CustomForm = () => {
                     })
                 }}>setData</Button>
                 <Button color={'blue'} variant={'outlined'} onClick={() => {
-                    antdFormRef.current?.validator().then(v => {
-                        console.log(v)
-                    }).catch(r => {
+                    antdFormRef.current?.validator().then(alertResult).catch(r => {
                         console.error(r)
                     })
                 }}>validator</Button>

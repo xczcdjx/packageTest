@@ -4,6 +4,7 @@ import {AdDynamicForm, type adDynamicFormRef, renderInput} from "dynamicformdjx-
 import {omitFormCommonKey, OmitValue, useDyForm, useReactiveForm} from "dynamicformdjx-react";
 import type {Rule} from "antd/es/form";
 import {PresetType} from "dynamicformdjx-react/types/index";
+import {alertResult} from "@/utils/link.ts";
 
 type RowProps = {
     username: string
@@ -66,7 +67,7 @@ const SimpleForm = () => {
                 <Button color={'green'} variant={'outlined'} onClick={() => {
                     // const res=antdFormRef.current?.getResult?.()
                     const res = useForm.getValues()
-                    console.log(res)
+                    alertResult(res)
                 }}>getData</Button>
                 <Button color={'orange'} variant={'outlined'} onClick={() => {
                     useForm.setValues({
@@ -75,9 +76,7 @@ const SimpleForm = () => {
                     })
                 }}>setData</Button>
                 <Button color={'blue'} variant={'outlined'} onClick={() => {
-                    antdFormRef.current?.validator().then(v => {
-                        console.log(v)
-                    }).catch(r => {
+                    antdFormRef.current?.validator().then(alertResult).catch(r => {
                         console.log(r)
                     })
                 }}>validator</Button>
