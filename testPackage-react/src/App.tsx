@@ -66,7 +66,6 @@ const App: React.FC = () => {
     function handleTheme(e: any) {
         if (!e.data || e.data.type !== 'theme') return
         const theme = e.data.value // 'dark' | 'light'
-        document.documentElement.classList.toggle('dark', theme === 'dark')
         setIsDark(theme === 'dark')
     }
 
@@ -76,6 +75,9 @@ const App: React.FC = () => {
             window.removeEventListener('message', handleTheme)
         }
     }, [])
+    useEffect(() => {
+        document.body.classList.toggle('dark', isDark);
+    }, [isDark]);
 
     return <ConfigProvider theme={{algorithm: isDark ? theme.darkAlgorithm : undefined}}>
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
