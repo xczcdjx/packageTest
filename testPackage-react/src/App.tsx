@@ -33,13 +33,21 @@ const items: MenuItem[] = [
                 label: '自定义表单',
                 key: 'customForm',
             },
+            {
+                label: '装饰表单',
+                key: 'decorateForm',
+            },
+            {
+                label: '总表单',
+                key: 'allForm',
+            },
         ],
     },
 ];
 
 const App: React.FC = () => {
     const route = useLocation()
-    console.log(getCurKey(route.pathname),route.pathname)
+    // console.log(getCurKey(route.pathname),route.pathname)
     const [current, setCurrent] = useState(getCurKey(route.pathname));
     const [isDark, setIsDark] = useState<boolean>(getStrTheme(route.search) === 'dark');
     const navigate = useNavigate();

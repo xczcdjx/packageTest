@@ -4,6 +4,8 @@ import CascadeInput from "@/views/input/CascadeInput";
 import App from "@/App";
 import SimpleForm from "@/views/form/SimpleForm";
 import CustomForm from "@/views/form/CustomForm.tsx";
+import AllForm from "@/views/form/AllForm.tsx";
+import DecorateForm from "@/views/form/DecorateForm.tsx";
 
 const routes = createBrowserRouter([
     {
@@ -25,6 +27,14 @@ const routes = createBrowserRouter([
             {
                 path: "customForm",
                 Component: CustomForm,
+            },
+            {
+                path: "allForm",
+                Component: AllForm,
+            },
+            {
+                path: "decorateForm",
+                Component: DecorateForm,
             },
         ]
     },
