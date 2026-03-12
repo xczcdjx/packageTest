@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages React
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -27,17 +27,20 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          cache-dependency-path: testPackage-react/package-lock.json
 
       - name: Install dependencies
+        working-directory: ./testPackage-react
         run: npm ci
 
       - name: Build project
+        working-directory: ./testPackage-react
         run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: ./testPackage-react/dist
 
   deploy:
     needs: build
