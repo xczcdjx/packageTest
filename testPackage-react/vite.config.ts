@@ -12,5 +12,5 @@ export default defineConfig({
   server:{
     port:6003
   },
-  base: '/testPackage-react/',
+  base: '/packageTest/testPackage-react/',
 })
