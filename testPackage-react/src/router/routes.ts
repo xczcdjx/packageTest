@@ -1,4 +1,4 @@
-import {createBrowserRouter} from "react-router";
+import {createHashRouter} from "react-router";
 import SingleInput from "@/views/input/SingleInput";
 import CascadeInput from "@/views/input/CascadeInput";
 import App from "@/App";
@@ -7,7 +7,7 @@ import CustomForm from "@/views/form/CustomForm.tsx";
 import AllForm from "@/views/form/AllForm.tsx";
 import DecorateForm from "@/views/form/DecorateForm.tsx";
 
-const routes = createBrowserRouter([
+const routes = createHashRouter([
     {
         path: "/",
         Component: App,
