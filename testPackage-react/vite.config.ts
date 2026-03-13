@@ -1,7 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import * as path from "node:path";
-
+const config:{base?:string}={base:undefined}
+if (process.env.NODE_ENV === 'production') {
+  config.base='/packageTest/testPackage-react/'
+}
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -12,5 +15,5 @@ export default defineConfig({
   server:{
     port:6003
   },
-  base: '/packageTest/testPackage-react/',
+  ...config
 })
