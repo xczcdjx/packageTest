@@ -6,9 +6,13 @@ export function getStrUrl(str: string, key: string='theme') {
 
 export function getCurKey(p: string) {
     let splitSym = '-'
-    if (p.includes('orm')) {
+    if (p==='/') return 'single'
+    else if (p.includes('orm')) {
         if (p === '/form') return 'simpleForm'
         splitSym = '/'
+    }else if (p.includes('zeal')){
+        if (p==='/zeal') return 'baseZeal'
+        splitSym = '/'
     }
-    return p === '/' ? 'single' : p.replace('/', '').split(splitSym)[1] ?? ''
+    return p.replace('/', '').split(splitSym)[1] ?? ''
 }

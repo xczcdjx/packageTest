@@ -6,6 +6,8 @@ import SimpleForm from "@/views/form/SimpleForm";
 import CustomForm from "@/views/form/CustomForm.tsx";
 import AllForm from "@/views/form/AllForm.tsx";
 import DecorateForm from "@/views/form/DecorateForm.tsx";
+import ZealBase from "@/views/zeal/ZealBase.tsx";
+import ZealComponents from "@/views/zeal/ZealComponents.tsx";
 
 const routes = createHashRouter([
     {
@@ -35,6 +37,17 @@ const routes = createHashRouter([
             {
                 path: "decorateForm",
                 Component: DecorateForm,
+            },
+        ]
+    },
+    {
+        path: "/zeal",
+        Component: App,
+        children: [
+            {index: true, Component: ZealBase},
+            {
+                path: "componentsZeal",
+                Component: ZealComponents,
             },
         ]
     },

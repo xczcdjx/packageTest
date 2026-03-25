@@ -43,6 +43,20 @@ const items: MenuItem[] = [
             },
         ],
     },
+    {
+        label: 'CURD模板',
+        key: 'zeal',
+        children: [
+            {
+                label: '基本',
+                key: 'baseZeal',
+            },
+            {
+                label: '组件',
+                key: 'componentsZeal',
+            },
+        ],
+    },
 ];
 
 const App: React.FC = () => {
@@ -59,6 +73,9 @@ const App: React.FC = () => {
         else if (e.key.includes('orm')) {
             if (e.key==='simpleForm') path='/form'
             else path=['/form'].concat(e.key).join('/')
+        }else if (e.key.includes('eal')) {
+            if (e.key==='baseZeal') path='/zeal'
+            else path=['/zeal'].concat(e.key).join('/')
         }
         navigate(path)
         setCurrent(e.key);
