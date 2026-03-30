@@ -8,6 +8,7 @@ import AllForm from "@/views/form/AllForm.tsx";
 import DecorateForm from "@/views/form/DecorateForm.tsx";
 import ZealBase from "@/views/zeal/ZealBase.tsx";
 import ZealComponents from "@/views/zeal/ZealComponents.tsx";
+import ZealTable from "@/views/zeal/ZealTable.tsx";
 
 const routes = createHashRouter([
     {
@@ -48,6 +49,10 @@ const routes = createHashRouter([
             {
                 path: "componentsZeal",
                 Component: ZealComponents,
+            },
+            {
+                path: "tableZeal",
+                Component: ZealTable,
             },
         ]
     },

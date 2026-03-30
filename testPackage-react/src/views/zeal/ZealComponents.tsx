@@ -4,7 +4,7 @@ import {
     AdPopupModal,
     adPopupModalRef,
     AdZealCard, AdZealTablePaginationControl,
-    AdZealTableSearch, AdZealTableSearchRef, useDecorateForm
+    AdZealTableSearch, adZealTableSearchRef, useDecorateForm
 } from "dynamicformdjx-react/antd";
 import {useLocation} from "react-router";
 import {getStrUrl} from "@/utils/tools.ts";
@@ -36,9 +36,10 @@ function PopupModal() {
     );
 }
 
-function ZealCard() {
+function ZealCard({pad}:{pad:number}) {
     return <AdZealCard
-        title="用户列表"
+        outPadding={pad}
+        title="Zeal Card"
         footer={({width}) => <div>windows width: {width}</div>}
         searchForm={() => <></>}
         controlBtn={() => <Button size='small' color={'green'} variant={'dashed'}>New</Button>}
@@ -56,7 +57,7 @@ function ZealTableSearch() {
         address: string
     }
     const {isMobile} = useWindowSize()
-    const searchRef = useRef<AdZealTableSearchRef<RowProps>>(null)
+    const searchRef = useRef<adZealTableSearchRef<RowProps>>(null)
     const searchFormItems = useDecorateForm<RowProps>([
         {
             key: "name",
@@ -117,7 +118,7 @@ function ZealTablePaginationControl() {
         <AdZealTablePaginationControl
             prefix={({total}) => isMobile ? null : <span>Total {total}</span>}
             isMobile={isMobile}
-            paginationModal={paginationModal}
+            pagination={paginationModal.pagination}
             onChange={(pn, ps) => {
                 messageApi.info(JSON.stringify({
                     pageNo: pn,
@@ -130,6 +131,7 @@ function ZealTablePaginationControl() {
 
 const ZealComponents = () => {
     const route = useLocation()
+    const pad=getStrUrl(route.search, 'hideMenu')==='true'?15:38
     const render = (type: string): ReactNode => {
         switch (type) {
             case 'modal':
@@ -139,7 +141,7 @@ const ZealComponents = () => {
             case 'page':
                 return (<ZealTablePaginationControl/>)
             default:
-                return <ZealCard/>
+                return <ZealCard pad={pad}/>
         }
     }
     return (<div className='zealComponetns'>

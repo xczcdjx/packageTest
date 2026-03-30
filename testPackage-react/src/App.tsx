@@ -55,6 +55,10 @@ const items: MenuItem[] = [
                 label: '组件',
                 key: 'componentsZeal',
             },
+            {
+                label: '模板',
+                key: 'tableZeal',
+            },
         ],
     },
 ];
@@ -101,7 +105,6 @@ const App: React.FC = () => {
         {
             !hideMenu&&<>
                 <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
-                <br/>
             </>
         }
         <Outlet/>
