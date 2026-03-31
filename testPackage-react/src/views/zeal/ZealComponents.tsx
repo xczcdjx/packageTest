@@ -56,7 +56,7 @@ function ZealTableSearch() {
         age: string
         address: string
     }
-    const {isMobile} = useWindowSize()
+    const {isMobile} = useWindowSize(630)
     const searchRef = useRef<adZealTableSearchRef<RowProps>>(null)
     const searchFormItems = useDecorateForm<RowProps>([
         {
@@ -102,7 +102,7 @@ function ZealTableSearch() {
 
 function ZealTablePaginationControl() {
     const [messageApi, contextHolder] = message.useMessage();
-    const {isMobile} = useWindowSize()
+    const {isMobile} = useWindowSize(630)
     const paginationModal = usePagination(fetchData)
 
     function fetchData() {
